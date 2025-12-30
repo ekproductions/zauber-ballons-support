@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zauber Ballons - Support</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #FFB5D8;
+            --pink-light: #FFE4F0;
+            --purple: #C9B8FF;
+            --purple-light: #EDE8FF;
+            --blue: #A8E6FF;
+            --blue-light: #E3F6FF;
+            --yellow: #FFE566;
+            --yellow-light: #FFF9DB;
+            --orange: #FFCBA4;
+            --green: #B8F5D8;
+            --white: #FFFFFF;
+            --text-dark: #4A4A6A;
+            --text-light: #7A7A9A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(180deg, var(--blue-light) 0%, var(--pink-light) 50%, var(--purple-light) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating Balloons Background */
+        .balloon-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-balloon {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.3;
+            animation: floatUp 20s linear infinite;
+        }
+
+        .floating-balloon:nth-child(1) { left: 5%; animation-delay: 0s; animation-duration: 25s; }
+        .floating-balloon:nth-child(2) { left: 15%; animation-delay: 3s; animation-duration: 22s; }
+        .floating-balloon:nth-child(3) { left: 25%; animation-delay: 7s; animation-duration: 28s; }
+        .floating-balloon:nth-child(4) { left: 40%; animation-delay: 2s; animation-duration: 24s; }
+        .floating-balloon:nth-child(5) { left: 55%; animation-delay: 5s; animation-duration: 26s; }
+        .floating-balloon:nth-child(6) { left: 70%; animation-delay: 8s; animation-duration: 23s; }
+        .floating-balloon:nth-child(7) { left: 85%; animation-delay: 1s; animation-duration: 27s; }
+        .floating-balloon:nth-child(8) { left: 95%; animation-delay: 6s; animation-duration: 21s; }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(110vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(20deg) scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        /* Clouds */
+        .cloud {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 100px;
+            animation: cloudFloat 30s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+        }
+
+        .cloud-1 {
+            width: 200px;
+            height: 60px;
+            top: 10%;
+            left: -200px;
+            animation-duration: 35s;
+        }
+        .cloud-1::before { width: 100px; height: 100px; top: -50px; left: 30px; }
+        .cloud-1::after { width: 70px; height: 70px; top: -30px; left: 100px; }
+
+        .cloud-2 {
+            width: 150px;
+            height: 45px;
+            top: 25%;
+            left: -150px;
+            animation-duration: 40s;
+            animation-delay: 10s;
+        }
+        .cloud-2::before { width: 80px; height: 80px; top: -40px; left: 20px; }
+        .cloud-2::after { width: 50px; height: 50px; top: -20px; left: 80px; }
+
+        .cloud-3 {
+            width: 180px;
+            height: 55px;
+            top: 60%;
+            left: -180px;
+            animation-duration: 45s;
+            animation-delay: 20s;
+        }
+        .cloud-3::before { width: 90px; height: 90px; top: -45px; left: 25px; }
+        .cloud-3::after { width: 60px; height: 60px; top: -25px; left: 95px; }
+
+        @keyframes cloudFloat {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 300px)); }
+        }
+
+        /* Main Content */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .logo {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .app-name {
+            font-family: 'Baloo 2', cursive;
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 50%, var(--orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow:
+                0 4px 20px rgba(201, 184, 255, 0.2),
+                0 8px 40px rgba(255, 181, 216, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 8px 30px rgba(201, 184, 255, 0.3),
+                0 12px 50px rgba(255, 181, 216, 0.15);
+        }
+
+        .card-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-title-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Description */
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .feature-list li {
+            padding: 0.6rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-weight: 600;
+        }
+
+        .feature-list li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            font-size: 1rem;
+        }
+
+        /* FAQ */
+        .faq-item {
+            border-bottom: 2px dashed var(--purple-light);
+            padding: 1.25rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .faq-item:first-child {
+            padding-top: 0;
+        }
+
+        .faq-question {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .faq-question::before {
+            content: '❓';
+            flex-shrink: 0;
+        }
+
+        .faq-answer {
+            color: var(--text-light);
+            line-height: 1.7;
+            padding-left: 2rem;
+            font-size: 1rem;
+        }
+
+        /* Contact */
+        .contact-info {
+            text-align: center;
+        }
+
+        .email-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(201, 184, 255, 0.4);
+        }
+
+        .email-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(201, 184, 255, 0.5);
+        }
+
+        .email-icon {
+            font-size: 1.3rem;
+        }
+
+        /* Privacy Link */
+        .privacy-section {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .privacy-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .privacy-link:hover {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text-dark);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .footer-balloons {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .app-name {
+                font-size: 2.2rem;
+            }
+
+            .logo {
+                font-size: 4rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+
+            .card-title {
+                font-size: 1.5rem;
+            }
+
+            .header {
+                padding: 2rem 0;
+            }
+
+            .email-button {
+                padding: 0.875rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .floating-balloon {
+                font-size: 2rem;
+            }
+        }
+
+        /* Sparkle Animation */
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .sparkle {
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Balloons Background -->
+    <div class="balloon-bg">
+        <div class="floating-balloon">🎈</div>
+        <div class="floating-balloon">🩷</div>
+        <div class="floating-balloon">🎈</div>
+        <div class="floating-balloon">💜</div>
+        <div class="floating-balloon">🎈</div>
+        <div class="floating-balloon">💛</div>
+        <div class="floating-balloon">🎈</div>
+        <div class="floating-balloon">💙</div>
+    </div>
+
+    <!-- Clouds -->
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">🎈</div>
+            <h1 class="app-name">Zauber Ballons</h1>
+            <p class="tagline">Das magische Puste-Spiel für kleine Zauberer</p>
+        </header>
+
+        <!-- About -->
+        <section class="card">
+            <h2 class="card-title">
+                <span class="card-title-icon">🌟</span>
+                Über die App
+            </h2>
+            <p class="description">
+                Zauber Ballons ist ein magisches Spiel für Kinder, bei dem bunte Ballons durch echtes Pusten ins Mikrofon wachsen!
+                Tippe auf die Ballons um sie platzen zu lassen, sammle Sterne und entdecke über 50 süße Sticker.
+            </p>
+            <ul class="feature-list">
+                <li>Einzigartige Puste-Magie mit dem Mikrofon</li>
+                <li>Bunte Ballons und fröhliche Animationen</li>
+                <li>Süßes Sticker-Sammelalbum</li>
+                <li>Kindgerecht und ohne Werbung</li>
+            </ul>
+        </section>
+
+        <!-- FAQ -->
+        <section class="card">
+            <h2 class="card-title">
+                <span class="card-title-icon">💭</span>
+                Häufige Fragen
+            </h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Wie funktioniert die Puste-Magie?</h3>
+                <p class="faq-answer">
+                    Wenn du ins Mikrofon deines Geräts pustest, erkennt die App das Geräusch und lässt die Ballons magisch wachsen!
+                    Je größer die Ballons werden, desto leichter kannst du sie antippen und platzen lassen.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Warum braucht die App Mikrofon-Zugriff?</h3>
+                <p class="faq-answer">
+                    Das Mikrofon wird nur für die Puste-Magie verwendet. Die App analysiert dabei nur die Lautstärke des Pustens –
+                    es werden keine Aufnahmen gespeichert oder übertragen. Du kannst die Puste-Magie jederzeit in den Einstellungen deaktivieren.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Wie kann ich den Spielfortschritt zurücksetzen?</h3>
+                <p class="faq-answer">
+                    Öffne die Einstellungen (Zahnrad-Symbol oben rechts), löse die Mathe-Aufgabe für den Elternbereich,
+                    und tippe dann auf "Spiel neustarten (Level 1)".
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Für welches Alter ist das Spiel geeignet?</h3>
+                <p class="faq-answer">
+                    Zauber Ballons ist für Kinder ab 3 Jahren geeignet. Das Spiel fördert spielerisch Koordination und Reaktion
+                    und enthält keine unangemessenen Inhalte, Werbung oder In-App-Käufe.
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="card">
+            <h2 class="card-title">
+                <span class="card-title-icon">📬</span>
+                Kontakt
+            </h2>
+            <div class="contact-info">
+                <p class="description" style="margin-bottom: 1.5rem;">
+                    Hast du Fragen, Anregungen oder brauchst Hilfe? Wir freuen uns über deine Nachricht!
+                </p>
+                <a href="mailto:support@zauberballons.app" class="email-button">
+                    <span class="email-icon">✉️</span>
+                    support@zauberballons.app
+                </a>
+            </div>
+        </section>
+
+        <!-- Privacy -->
+        <div class="privacy-section">
+            <a href="datenschutz.html" class="privacy-link">
+                🔒 Datenschutzerklärung
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-balloons">🎈💜🎈💛🎈</div>
+            <p>© 2025 Zauber Ballons. Mit 💖 gemacht für kleine Zauberer.</p>
+        </footer>
+    </div>
+</body>
+</html>
